@@ -1,4 +1,4 @@
-“Agenda Escolar Digital”, voltada para alunos, professores e funcionários de uma escola. O sistema deve ser simples, moderno, bonito, organizado e extremamente fácil de usar, funcionando perfeitamente tanto em computadores quanto em celulares.
+
 
 1. Layout geral
 
