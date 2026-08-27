@@ -1,6 +1,4 @@
-# agenda-escolar-digital
-Plataforma web responsiva de agenda escolar para alunos, professores e funcionários
-Crie uma plataforma web responsiva chamada “Agenda Escolar Digital”, voltada para alunos, professores e funcionários de uma escola. O sistema deve ser simples, moderno, bonito, organizado e extremamente fácil de usar, funcionando perfeitamente tanto em computadores quanto em celulares.
+“Agenda Escolar Digital”, voltada para alunos, professores e funcionários de uma escola. O sistema deve ser simples, moderno, bonito, organizado e extremamente fácil de usar, funcionando perfeitamente tanto em computadores quanto em celulares.
 
 1. Layout geral
 
