@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Escolar Digital</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                <h1>EduAgenda</h1>
+            </div>
+
+            <nav class="nav-menu">
+                <ul class="menu-items">
+                    <li><a href="#inicio" class="menu-link active" onclick="showSection('inicio')">
+                        <i class="fas fa-home"></i>
+                        <span>Início</span>
+                    </a></li>
+                    <li><a href="#agenda" class="menu-link" onclick="showSection('agenda')">
+                        <i class="fas fa-calendar"></i>
+                        <span>Agenda</span>
+                    </a></li>
+                    <li><a href="#tarefas" class="menu-link" onclick="showSection('tarefas')">
+                        <i class="fas fa-tasks"></i>
+                        <span>Tarefas</span>
+                    </a></li>
+                    <li><a href="#comunicados" class="menu-link" onclick="showSection('comunicados')">
+                        <i class="fas fa-bell"></i>
+                        <span>Comunicados</span>
+                    </a></li>
+                    <li><a href="#materiais" class="menu-link" onclick="showSection('materiais')">
+                        <i class="fas fa-book"></i>
+                        <span>Materiais</span>
+                    </a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="footer-btn" onclick="showSection('configuracoes')">
+                    <i class="fas fa-cog"></i>
+                    <span>Configurações</span>
+                </button>
+                <button class="footer-btn" onclick="showSection('ajuda')">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Ajuda</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-info">
+                    <span class="date-now" id="dateNow"></span>
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Student&background=6366f1&color=fff" alt="Perfil">
+                    <span>Aluno</span>
+                </div>
+            </header>
+
+            <!-- Início Section -->
+            <section id="inicio" class="content-section active">
+                <h2>Bem-vindo à sua Agenda Escolar</h2>
+                <div class="dashboard-grid">
+                    <div class="card stats-card">
+                        <div class="card-content">
+                            <i class="fas fa-calendar-check"></i>
+                            <h3>Próximos Eventos</h3>
+                            <p class="big-number" id="proximosEventos">3</p>
+                            <small>Esta semana</small>
+                        </div>
+                    </div>
+                    <div class="card stats-card">
+                        <div class="card-content">
+                            <i class="fas fa-tasks"></i>
+                            <h3>Tarefas Pendentes</h3>
+                            <p class="big-number" id="tarefasPendentes">5</p>
+                            <small>Para concluir</small>
+                        </div>
+                    </div>
+                    <div class="card stats-card">
+                        <div class="card-content">
+                            <i class="fas fa-bell"></i>
+                            <h3>Comunicados</h3>
+                            <p class="big-number" id="totalComunicados">2</p>
+                            <small>Não lidos</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-access">
+                    <h3>Acesso Rápido</h3>
+                    <div class="quick-buttons">
+                        <button class="quick-btn" onclick="showSection('agenda')">
+                            <i class="fas fa-plus"></i>
+                            Ver Agenda
+                        </button>
+                        <button class="quick-btn" onclick="showSection('tarefas')">
+                            <i class="fas fa-plus"></i>
+                            Ver Tarefas
+                        </button>
+                        <button class="quick-btn" onclick="showSection('comunicados')">
+                            <i class="fas fa-plus"></i>
+                            Ver Comunicados
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Agenda Section -->
+            <section id="agenda" class="content-section">
+                <h2>Agenda</h2>
+                <div class="agenda-container">
+                    <!-- Calendar -->
+                    <div class="calendar-wrapper">
+                        <div class="calendar-header">
+                            <button onclick="previousMonth()"><i class="fas fa-chevron-left"></i></button>
+                            <h3 id="monthYear"></h3>
+                            <button onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendar">
+                            <div class="weekdays">
+                                <div>Dom</div>
+                                <div>Seg</div>
+                                <div>Ter</div>
+                                <div>Qua</div>
+                                <div>Qui</div>
+                                <div>Sex</div>
+                                <div>Sab</div>
+                            </div>
+                            <div class="days" id="calendarDays"></div>
+                        </div>
+
+                        <div class="legend">
+                            <h4>Legenda de Cores</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #3b82f6;"></span>
+                                    <span>Reuniões</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #fbbf24;"></span>
+                                    <span>Palestras</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #ec4899;"></span>
+                                    <span>Avaliações</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #10b981;"></span>
+                                    <span>Entrega Tarefas</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #8b5cf6;"></span>
+                                    <span>Projetos</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #f97316;"></span>
+                                    <span>Feriados</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Events -->
+                    <div class="events-wrapper">
+                        <div class="events-header">
+                            <h3>Eventos</h3>
+                            <button class="btn-add" onclick="openEventModal()">
+                                <i class="fas fa-plus"></i> Novo Evento
+                            </button>
+                        </div>
+                        <div class="events-list" id="eventsList">
+                            <!-- Events will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tarefas Section -->
+            <section id="tarefas" class="content-section">
+                <h2>Tarefas</h2>
+                <div class="tarefas-container">
+                    <div class="tarefas-header">
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" onclick="filterTarefas('todas')">Todas</button>
+                            <button class="filter-btn" onclick="filterTarefas('pendentes')">Pendentes</button>
+                            <button class="filter-btn" onclick="filterTarefas('concluidas')">Concluídas</button>
+                        </div>
+                        <button class="btn-add" onclick="openTarefaModal()">
+                            <i class="fas fa-plus"></i> Nova Tarefa
+                        </button>
+                    </div>
+
+                    <div class="tarefas-list" id="tarefasList">
+                        <!-- Tarefas will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comunicados Section -->
+            <section id="comunicados" class="content-section">
+                <h2>Comunicados</h2>
+                <div class="comunicados-container">
+                    <div class="comunicados-list" id="comunicadosList">
+                        <!-- Comunicados will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Materiais Section -->
+            <section id="materiais" class="content-section">
+                <h2>Materiais</h2>
+                <div class="materiais-container">
+                    <div class="materiais-header">
+                        <input type="text" placeholder="Buscar materiais..." class="search-input">
+                        <button class="btn-add" onclick="openMaterialModal()">
+                            <i class="fas fa-plus"></i> Adicionar Material
+                        </button>
+                    </div>
+
+                    <div class="materiais-list" id="materiaisList">
+                        <!-- Materiais will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Configurações Section -->
+            <section id="configuracoes" class="content-section">
+                <h2>Configurações</h2>
+                <div class="config-container">
+                    <div class="config-card">
+                        <h3>Preferências</h3>
+                        <div class="config-item">
+                            <label>Tema</label>
+                            <select id="themeSelect" onchange="changeTheme()">
+                                <option value="light">Claro</option>
+                                <option value="dark">Escuro</option>
+                                <option value="auto">Automático</option>
+                            </select>
+                        </div>
+                        <div class="config-item">
+                            <label>Notificações</label>
+                            <input type="checkbox" id="notificacoes" checked>
+                        </div>
+                    </div>
+
+                    <div class="config-card">
+                        <h3>Perfil</h3>
+                        <div class="config-item">
+                            <label>Nome Completo</label>
+                            <input type="text" placeholder="Seu nome" value="João Silva">
+                        </div>
+                        <div class="config-item">
+                            <label>Email</label>
+                            <input type="email" placeholder="Seu email" value="joao@escola.edu.br">
+                        </div>
+                        <div class="config-item">
+                            <label>Série/Turma</label>
+                            <input type="text" placeholder="Ex: 3º Ano A" value="3º Ano A">
+                        </div>
+                    </div>
+
+                    <button class="btn-save" onclick="saveSettings()">Salvar Configurações</button>
+                </div>
+            </section>
+
+            <!-- Ajuda Section -->
+            <section id="ajuda" class="content-section">
+                <h2>Ajuda</h2>
+                <div class="ajuda-container">
+                    <div class="faq">
+                        <div class="faq-item">
+                            <h4>Como adicionar um novo evento?</h4>
+                            <p>Vá para a seção Agenda e clique em "Novo Evento". Preencha os dados do evento com data, hora e descrição.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Como marcar uma tarefa como concluída?</h4>
+                            <p>Na seção Tarefas, clique no checkbox ao lado da tarefa para marcá-la como concluída.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Posso receber notificações de eventos?</h4>
+                            <p>Sim! Ative as notificações em Configurações para receber alertas sobre próximos eventos.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Como usar a plataforma no celular?</h4>
+                            <p>A plataforma é totalmente responsiva e funciona perfeitamente em smartphones e tablets.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Como fazer download de materiais?</h4>
+                            <p>Acesse a seção Materiais, localize o arquivo desejado e clique no botão de download.</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-support">
+                        <h3>Precisa de mais ajuda?</h3>
+                        <p>Entre em contato com o suporte</p>
+                        <button class="btn-contact">
+                            <i class="fas fa-envelope"></i> Enviar Mensagem
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEventModal()">&times;</span>
+            <h2>Novo Evento</h2>
+            <form id="eventForm">
+                <input type="text" placeholder="Título do evento" required>
+                <input type="date" required>
+                <input type="time" required>
+                <select required>
+                    <option>Selecione o tipo...</option>
+                    <option>Reunião</option>
+                    <option>Palestra</option>
+                    <option>Avaliação</option>
+                    <option>Entrega Tarefas</option>
+                    <option>Projeto</option>
+                    <option>Feriado</option>
+                </select>
+                <textarea placeholder="Descrição do evento"></textarea>
+                <button type="submit" class="btn-submit">Criar Evento</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tarefaModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTarefaModal()">&times;</span>
+            <h2>Nova Tarefa</h2>
+            <form id="tarefaForm">
+                <input type="text" placeholder="Título da tarefa" required>
+                <input type="date" placeholder="Data de entrega" required>
+                <select required>
+                    <option>Selecione a disciplina...</option>
+                    <option>Português</option>
+                    <option>Matemática</option>
+                    <option>História</option>
+                    <option>Geografia</option>
+                    <option>Ciências</option>
+                    <option>Inglês</option>
+                </select>
+                <textarea placeholder="Descrição da tarefa"></textarea>
+                <button type="submit" class="btn-submit">Criar Tarefa</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="materialModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeMaterialModal()">&times;</span>
+            <h2>Adicionar Material</h2>
+            <form id="materialForm">
+                <input type="text" placeholder="Título do material" required>
+                <select required>
+                    <option>Selecione a disciplina...</option>
+                    <option>Português</option>
+                    <option>Matemática</option>
+                    <option>História</option>
+                    <option>Geografia</option>
+                    <option>Ciências</option>
+                    <option>Inglês</option>
+                </select>
+                <input type="file" required>
+                <button type="submit" class="btn-submit">Adicionar Material</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
